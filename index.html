@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Mohammad Haris | Portfolio</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+<style>
+:root{
+  --bg-color:#0f0f1a;
+  --text-color:#eaeaf0;
+  --card-bg:#1a1a2e;
+  --accent:#43cea2;
+  --gradient1:#667eea;
+  --gradient2:#764ba2;
+  --bold-glow-gradient: linear-gradient(45deg, #ff4dff, #4dffff);
+}
+
+/* Base styles */
+body{
+  margin:0;
+  font-family:'Poppins',sans-serif;
+  background:var(--bg-color);
+  color:var(--text-color);
+  scroll-behavior:smooth;
+  overflow-x:hidden;
+  transition:0.5s;
+}
+strong{
+  background: var(--bold-glow-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow:0 0 15px #ff4dff,0 0 25px #4dffff;
+  font-weight:700;
+}
+
+/* Navbar */
+nav{
+  position:sticky; top:0;
+  background:var(--card-bg);
+  padding:15px 20px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  z-index:999;
+  box-shadow:0 2px 10px rgba(0,0,0,0.5);
+}
+nav .logo{font-weight:700;font-size:1.5rem;color:#ffeaa7;}
+nav ul{display:flex;list-style:none;}
+nav ul li{margin-left:25px;}
+nav ul li a{color:var(--text-color);font-weight:500;transition:0.3s;}
+nav ul li a:hover{color:var(--accent);}
+nav .toggle-btn{font-size:1.3rem;cursor:pointer;color:var(--text-color);display:none;}
+
+/* Hero section */
+.hero{
+  position:relative;
+  overflow:hidden;
+  text-align:center;
+  padding:140px 20px;
+  opacity:0; transform:translateY(50px); transition:1s;
+  z-index:1;
+}
+.hero p{
+  margin-top:18px;font-size:1.8rem;font-weight:700;
+  text-shadow:0 0 15px var(--accent);
+  position:relative;
+  z-index:2;
+}
+
+/* Particle canvas */
+#particle-canvas{
+  position:absolute;
+  top:0; left:0;
+  width:100%; height:100%;
+  z-index:0;
+}
+
+/* Sections */
+.container{
+  max-width:1200px;margin:auto;padding:80px 20px;
+  scroll-margin-top:80px;
+  opacity:0;transform:translateY(50px);transition:all 1s ease;
+}
+.fade-in{opacity:1;transform:translateY(0);}
+.section-title{text-align:center;margin-bottom:50px;}
+.section-title h2{font-size:2.7rem;background:linear-gradient(45deg,var(--gradient1),var(--accent));-webkit-background-clip:text;-webkit-text-fill-color:transparent;text-shadow:0 0 10px var(--accent);}
+.section-title p{color:#bdbdd7;margin-top:10px;}
+.about{text-align:center;max-width:900px;margin:auto;line-height:1.9;font-size:1.1rem;text-shadow:0 0 5px var(--accent);}
+
+/* Cards */
+.cards{
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:30px;
+}
+.card{
+  background:var(--card-bg);
+  padding:35px;
+  border-radius:22px;
+  box-shadow:0 20px 40px rgba(0,0,0,0.5);
+  transition:0.5s, transform 0.5s, box-shadow 0.5s;
+  opacity:0; transform:translateY(50px);
+  perspective:1000px;
+}
+.card.fade-in{opacity:1;transform:translateY(0);}
+.card:hover{
+  transform:rotateY(10deg) rotateX(10deg) translateY(-10px);
+  box-shadow:0 0 25px #ff4dff,0 0 40px #4dffff;
+}
+.card h3{color:#ffeaa7;margin-bottom:12px;text-shadow:0 0 5px var(--accent);}
+
+/* Skills */
+.skills span{
+  display:block;margin:10px 0;font-weight:600;position:relative;
+}
+.skills span .bar{
+  display:block;height:12px;width:0%;background:linear-gradient(45deg,#ff4dff,#4dffff);border-radius:5px;transition:width 1.5s ease;margin-top:5px;
+}
+
+/* Contact */
+.contact-box{
+  background:linear-gradient(135deg,var(--gradient1),var(--gradient2),var(--accent));
+  padding:50px;border-radius:25px;text-align:center;
+  transition:0.5s;opacity:0;transform:translateY(50px);
+}
+.contact-box.fade-in{opacity:1;transform:translateY(0);}
+.contact-box a{color:#0f0f1a;font-weight:700;}
+.contact-box:hover{box-shadow:0 0 25px var(--accent),0 0 40px var(--gradient1);}
+
+/* Buttons */
+.btn-resume{
+  display:inline-block;padding:12px 25px;margin-top:20px;
+  background:linear-gradient(45deg,#ff4dff,#4dffff);
+  color:#fff;border-radius:25px;font-weight:600;
+  transition:0.3s, box-shadow 0.3s;text-shadow:0 0 5px #ff4dff,0 0 10px #4dffff;
+}
+.btn-resume:hover{box-shadow:0 0 20px #ff4dff,0 0 35px #4dffff;}
+
+/* Footer */
+footer{background:#0a0a14;text-align:center;padding:30px;border-top:1px solid #222;color:#bdbdd7;}
+
+/* Neon cursor trail */
+.cursor-trail{
+  position:absolute;
+  width:15px;
+  height:15px;
+  border-radius:50%;
+  pointer-events:none;
+  mix-blend-mode: difference;
+  background:linear-gradient(45deg,#ff4dff,#4dffff);
+  z-index:9999;
+  transition:transform 0.1s linear;
+}
+
+/* Responsive */
+@media(max-width:768px){
+  nav ul{flex-direction:column;background:var(--card-bg);position:absolute;top:60px;right:0;width:200px;display:none;}
+  nav ul.active{display:flex;}
+  nav ul li{margin:15px 0;}
+  nav .toggle-btn{display:block;}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="logo">Haris</div>
+  <ul id="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#education">Education</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#cyber">Cyber Security</a></li>
+    <li><a href="#goals">Goals</a></li>
+    <li><a href="#climate">Climate</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <div class="toggle-btn" id="theme-toggle"><i class="fas fa-moon"></i></div>
+</nav>
+
+<section class="hero" id="home">
+  <canvas id="particle-canvas"></canvas>
+  <p><strong>MOHAMMAD HARIS</strong><br>Class 11th Student • Coder • Cyber Security Enthusiast • Digital Explorer • Traveler</p>
+</section>
+
+<!-- ABOUT -->
+<section class="container" id="about">
+  <div class="section-title"><h2>About Me</h2><p>Who I am</p></div>
+  <p class="about">
+    <strong>MOHAMMAD HARIS</strong> is a passionate student from <strong>Amilo Mubarakpur, Azamgarh</strong>.  
+    Interested in coding, cyber security, digital marketing, traveling, and climate sustainability.  
+    My goal is to combine technology and sustainability to create positive impact globally.
+  </p>
+  <a href="Mohammad_Haris_Resume.pdf" class="btn-resume" download>Download Resume</a>
+</section>
+
+<!-- EDUCATION -->
+<section class="container" id="education">
+  <div class="section-title"><h2>Education</h2><p>My academic journey</p></div>
+  <div class="cards">
+    <div class="card">
+      <h3>Shibli School, Amilo Mubarakpur</h3>
+      <p>Completed primary and secondary education with strong foundation in science and mathematics.</p>
+    </div>
+    <div class="card">
+      <h3>AMU Aligarh</h3>
+      <p>Currently pursuing higher education with focus on coding, cyber security, and digital marketing.</p>
+    </div>
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section class="container" id="skills">
+  <div class="section-title"><h2>Skills</h2><p>What I am learning</p></div>
+  <div class="skills">
+    <span>HTML <span class="bar" data-width="90%"></span></span>
+    <span>CSS <span class="bar" data-width="85%"></span></span>
+    <span>JavaScript <span class="bar" data-width="75%"></span></span>
+    <span>Python <span class="bar" data-width="70%"></span></span>
+    <span>Cyber Security <span class="bar" data-width="60%"></span></span>
+    <span>Digital Marketing <span class="bar" data-width="50%"></span></span>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section class="container" id="projects">
+  <div class="section-title"><h2>Projects</h2><p>My practical work</p></div>
+  <div class="cards">
+    <div class="card">
+      <h3>Portfolio Website</h3>
+      <p>Professional interactive website showcasing my skills, projects, and achievements.</p>
+    </div>
+    <div class="card">
+      <h3>Web Development Projects</h3>
+      <p>Various websites and landing pages using HTML, CSS, JavaScript, responsive design.</p>
+    </div>
+    <div class="card">
+      <h3>Cyber Security Projects</h3>
+      <p>Ethical hacking experiments, vulnerability assessments, and privacy-focused projects.</p>
+    </div>
+  </div>
+</section>
+
+<!-- CYBER SECURITY -->
+<section class="container" id="cyber">
+  <div class="section-title"><h2>Cyber Security</h2><p>Digital safety & protection</p></div>
+  <div class="cards">
+    <div class="card">
+      <h3>Ethical Hacking Basics</h3>
+      <p>Learning penetration testing, network scanning, and vulnerability detection.</p>
+    </div>
+    <div class="card">
+      <h3>Data Protection</h3>
+      <p>Focus on encryption, password safety, and secure information handling.</p>
+    </div>
+    <div class="card">
+      <h3>Cyber Awareness</h3>
+      <p>Creating awareness content for safe internet usage among peers and community.</p>
+    </div>
+  </div>
+</section>
+
+<!-- GOALS -->
+<section class="container" id="goals">
+  <div class="section-title"><h2>Goals & Vision</h2><p>Future plans</p></div>
+  <p class="about">
+    Aim to become a proficient coder and cyber security expert, leveraging technology for community benefits, digital education, and sustainability.
+  </p>
+</section>
+
+<!-- CLIMATE -->
+<section class="container" id="climate">
+  <div class="section-title"><h2>Climate & Sustainability</h2><p>Protecting our planet</p></div>
+  <p class="about">
+    Actively supporting resource conservation, climate awareness, and using digital platforms to educate about sustainable practices.
+  </p>
+</section>
+
+<!-- CONTACT -->
+<section class="container" id="contact">
+  <div class="contact-box">
+    <h2>Contact Me</h2>
+    <p>📞 <a href="tel:8077097290">8077097290</a></p>
+    <p>📧 <a href="mailto:mohammadhamdanhamdan3@gmail.com">mohammadhamdanhamdan3@gmail.com</a></p>
+  </div>
+</section>
+
+<footer>
+  <p>© 2026 Mohammad Haris | All Rights Reserved</p>
+</footer>
+
+<div class="cursor-trail" id="cursor"></div>
+
+<script>
+// Fade-in on scroll
+const faders=document.querySelectorAll('.container, .hero, .card, .contact-box');
+window.addEventListener('scroll',()=>{
+  faders.forEach(fader=>{
+    const top=fader.getBoundingClientRect().top;
+    if(top<window.innerHeight-100){fader.classList.add('fade-in');}
+  });
+});
+
+// Skills animation
+const skillBars=document.querySelectorAll('.bar');
+window.addEventListener('scroll',()=>{
+  skillBars.forEach(bar=>{
+    const top=bar.getBoundingClientRect().top;
+    if(top<window.innerHeight-50 && !bar.classList.contains('animated')){
+      bar.classList.add('animated');
+      bar.style.width=bar.getAttribute('data-width');
+    }
+  });
+});
+
+// Dark/Light toggle
+const toggle=document.getElementById('theme-toggle');
+toggle.addEventListener('click',()=>{
+  document.body.classList.toggle('light');
+  if(document.body.classList.contains('light')){
+    document.documentElement.style.setProperty('--bg-color','#ffffff');
+    document.documentElement.style.setProperty('--text-color','#0f0f1a');
+    document.documentElement.style.setProperty('--card-bg','#f0f0f0');
+    document.documentElement.style.setProperty('--accent','#43cea2');
+    toggle.innerHTML='<i class="fas fa-sun"></i>';
+  }else{
+    document.documentElement.style.setProperty('--bg-color','#0f0f1a');
+    document.documentElement.style.setProperty('--text-color','#eaeaf0');
+    document.documentElement.style.setProperty('--card-bg','#1a1a2e');
+    document.documentElement.style.setProperty('--accent','#43cea2');
+    toggle.innerHTML='<i class="fas fa-moon"></i>';
+  }
+});
+
+// Neon Cursor
+const cursor=document.getElementById('cursor');
+document.addEventListener('mousemove',e=>{
+  cursor.style.transform=`translate(${e.clientX-7.5}px, ${e.clientY-7.5}px)`;
+});
+
+// Particle Animation
+const canvas=document.getElementById('particle-canvas');
+const ctx=canvas.getContext('2d');
+canvas.width=window.innerWidth;
+canvas.height=window.innerHeight;
+class Particle{
+  constructor(){
+    this.x=Math.random()*canvas.width;
+    this.y=Math.random()*canvas.height;
+    this.size=Math.random()*3+1;
+    this.speedX=Math.random()*2-1;
+    this.speedY=Math.random()*2-1;
+  }
+  update(){
+    this.x+=this.speedX;
+    this.y+=this.speedY;
+    if(this.x<0||this.x>canvas.width)this.speedX*=-1;
+    if(this.y<0||this.y>canvas.height)this.speedY*=-1;
+  }
+  draw(){
+    ctx.fillStyle='rgba(255,77,255,0.7)';
+    ctx.shadowColor='#4dffff';
+    ctx.shadowBlur=15;
+    ctx.beginPath();
+    ctx.arc(this.x,this.y,this.size,0,Math.PI*2);
+    ctx.fill();
+  }
+}
+let particles=[];
+for(let i=0;i<120;i++)particles.push(new Particle());
+function animateParticles(){
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+  particles.forEach(p=>{
+    p.update();
+    p.draw();
+  });
+  requestAnimationFrame(animateParticles);
+}
+animateParticles();
+window.addEventListener('resize',()=>{
+  canvas.width=window.innerWidth;
+  canvas.height=window.innerHeight;
+});
+</script>
+</body>
+</html>
